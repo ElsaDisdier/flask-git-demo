@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from datetime import datetime, date
+import random
 
 app = Flask(__name__)
 
@@ -10,10 +11,13 @@ def index():
         dob = request.form['dob']
         age = calculate_age(dob)
         zodiac = get_zodiac_sign(dob)
-        days_to_bday = days_to_birthday(dob)
-        message = f"Hello, {name}! Your age is {age} and your zodiac sign is {zodiac}. There are {days_to_bday} days until your next birthday!"
+        lucky_number = get_lucky_number()
+        message = f"Hello, {name}! Your age is {age}, your zodiac sign is {zodiac}, and there are {days_to_bday} days until your next birthday. Your lucky number is {lucky_number}!"
         return render_template('result.html', message=message)
     return render_template('index.html')
+
+def get_lucky_number():
+    return random.randint(1, 100)
 
 def days_to_birthday(dob):
     today = date.today()
